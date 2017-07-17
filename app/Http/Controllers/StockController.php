@@ -43,7 +43,7 @@ class StockController extends Controller
                 'measurement_amount' => 'required|integer',
                 'store_id' => 'required|integer|exists:stores,id'
             ];
-            /*g
+            /*
              * 1. Create the inventory item
              * 2. Add the batch
              */
