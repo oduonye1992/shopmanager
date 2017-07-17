@@ -35,7 +35,7 @@ class AuthMiddleware
             $payload = JWTAuth::parseToken()->getPayload();
             $store_id = $payload->get('store_id');
             $request['x_user'] = $user;
-            $request['x_store_id'] = $store_id;
+            $request['x_store_id'] = $user->store_id;
             return $next($request);
     }
 }

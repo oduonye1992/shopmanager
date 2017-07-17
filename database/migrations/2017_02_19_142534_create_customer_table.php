@@ -19,6 +19,7 @@ class CreateCustomerTable extends Migration
             $table->softDeletes();
             $table->string('firstname')->nullable();
             $table->string('lastname');
+            $table->boolean('is_default')->default(false);
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->integer('store_id')->unsigned();

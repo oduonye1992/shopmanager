@@ -20,6 +20,8 @@ class CreateInventoryType extends Migration
             $table->softDeletes();
             $table->boolean('is_trackable');
             $table->integer('threshold_count')->nullable();
+            $table->string('measurement_name')->default('items');
+            $table->integer('measurement_equivalent')->default(1);
             $table->integer('amount');
             $table->integer('store_id')->unsigned();
             $table->foreign('store_id')->references('id')->on('stores');

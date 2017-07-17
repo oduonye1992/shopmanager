@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Customer;
 use App\Setting;
 use App\User;
 use App\Utility;
+use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -50,6 +52,17 @@ class AuthController extends Controller
             $settings = Setting::create([
                 'store_id' => $store->id
             ]);
+            Vendor::create([
+                'firstname' => 'Unknown Vendor',
+                'lastname' => 'Unknown Vendor',
+                'store_id' => $store->id,
+                'is_default' => true
+            ]);
+            Customer::create([
+                'lastname' => 'Unknown Customer',
+                'store_id' => $store->id,
+                'is_default' => true
+            ]);
             $userData = [
                 "store_id" => $store->id,
                 "name" => $request->username,
@@ -65,8 +78,7 @@ class AuthController extends Controller
             ];
             return response($resp, Response::HTTP_CREATED);
         } catch (\Exception $e){
-            Utility::log($e->getMessage() . "\n" .$e->getTraceAsString());
-            return response("An error occured and has been logged", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Utility::logError($e);
         }
     }
     public function login(Request $request){

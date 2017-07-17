@@ -11,7 +11,14 @@ use Validator;
 
 class VendorController extends Controller
 {
-    private $_tableColumns = ['firstname', 'lastname', 'email', 'phone', 'store_id',];
+    private $_tableColumns = [
+        'firstname',
+        'lastname',
+        'email',
+        'phone',
+        'store_id',
+        'is_default'
+    ];
     private $_entity = 'vendor';
     public function read(Request $request){
         try {

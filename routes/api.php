@@ -53,12 +53,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/{inventory_type}', 'InventoryTypeController@delete');
     });
 
-    Route::group(['prefix' => 'pettyCash', 'middleware' => ['auth.user']], function () {
-        Route::get('', 'PettyCashController@read');
-        Route::post('', 'PettyCashController@add');
-        Route::get('/{petty_cash}', 'PettyCashController@getByID');
-        Route::put('/{petty_cash}', 'PettyCashController@update');
-        Route::delete('/{petty_cash}', 'PettyCashController@delete');
+    Route::group(['prefix' => 'stock', 'middleware' => ['auth.user']], function () {
+        Route::get('', 'StockController@read');
+        Route::post('', 'StockController@add');
     });
 
     Route::group(['prefix' => 'expenseManager', 'middleware' => ['auth.user']], function () {
@@ -71,6 +68,14 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'reports', 'middleware' => ['auth.user']], function () {
         Route::get('car', 'ReportController@car');
+    });
+
+    Route::group(['prefix' => 'inventories', 'middleware' => ['auth.user']], function () {
+        Route::get('', 'InventoryController@read');
+        Route::post('', 'InventoryController@add');
+        Route::get('/{inventory}', 'InventoryController@getByID');
+        Route::put('/{inventory}', 'InventoryController@update');
+        Route::delete('/{inventory}', 'InventoryController@delete');
     });
 
     Route::group(['prefix' => 'inventories', 'middleware' => ['auth.user']], function () {

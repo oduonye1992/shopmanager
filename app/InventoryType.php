@@ -15,6 +15,8 @@ class InventoryType extends Model
         'is_trackable',
         'threshold_count',
         'amount',
+        'measurement_name',
+        'measurement_equivalent',
         'store_id'
     ];
     public function Store(){

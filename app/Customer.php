@@ -15,7 +15,8 @@ class Customer extends Model
         'lastname',
         'email',
         'phone',
-        'store_id',
+        'is_default',
+        'store_id'
     ];
     public function Store(){
         return $this->belongsTo('App\Company', 'store_id');
