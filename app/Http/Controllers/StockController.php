@@ -40,7 +40,7 @@ class StockController extends Controller
                 'quantity' => 'required|integer',
                 'price' => 'required|integer',
                 'measurement_name' => 'required',
-                'measurement_amount' => 'required|integer',
+                'measurement_equivalent' => 'required|integer',
                 'store_id' => 'required|integer|exists:stores,id'
             ];
             /*

@@ -42,7 +42,7 @@ class PettyCashController extends Controller
              */
             $data = $request->all();
             $data['store_id'] = $request->x_store_id;
-            $data['user_id'] = $request->x_user;
+            $data['user_id'] = $request->x_user->id;
             $validator = Validator::make($data, $rules);
             if ($validator->fails()) {
                 return response($validator->errors()->all(), Response::HTTP_UNAUTHORIZED);

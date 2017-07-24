@@ -10,6 +10,7 @@ use App\Utility;
 use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 class AuthController extends Controller
@@ -93,10 +94,10 @@ class AuthController extends Controller
                 return response($validator->errors()->all(), Response::HTTP_BAD_REQUEST);
             }
             $matchingUsers = User::where(['email' => $request->email,
-                // 'password' => bcrypt($request->password),
+                //'password' => Hash::make($request->password),
                 'store_id'=> $request->id])->get();
             if (!count($matchingUsers)){
-                return response('Incorrect email or password', Response::HTTP_BAD_REQUEST);
+                return response('Incorrect email or password', Response::HTTP_UNAUTHORIZED);
             }
             $user = $matchingUsers[0];
             $customClaims = ['store_id' => $request->store_id];

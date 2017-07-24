@@ -58,24 +58,16 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('', 'StockController@add');
     });
 
-    Route::group(['prefix' => 'expenseManager', 'middleware' => ['auth.user']], function () {
-        Route::get('', 'ExpenseManagerController@read');
-        Route::post('', 'ExpenseManagerController@add');
-        Route::get('/{petty_cash}', 'ExpenseManagerController@getByID');
-        Route::put('/{petty_cash}', 'ExpenseManagerController@update');
-        Route::delete('/{petty_cash}', 'ExpenseManagerController@delete');
+    Route::group(['prefix' => 'petty_cash', 'middleware' => ['auth.user']], function () {
+        Route::get('', 'PettyCashController@read');
+        Route::post('', 'PettyCashController@add');
+        Route::get('/{petty_cash}', 'PettyCashController@getByID');
+        Route::put('/{petty_cash}', 'PettyCashController@update');
+        Route::delete('/{petty_cash}', 'PettyCashController@delete');
     });
 
     Route::group(['prefix' => 'reports', 'middleware' => ['auth.user']], function () {
         Route::get('car', 'ReportController@car');
-    });
-
-    Route::group(['prefix' => 'inventories', 'middleware' => ['auth.user']], function () {
-        Route::get('', 'InventoryController@read');
-        Route::post('', 'InventoryController@add');
-        Route::get('/{inventory}', 'InventoryController@getByID');
-        Route::put('/{inventory}', 'InventoryController@update');
-        Route::delete('/{inventory}', 'InventoryController@delete');
     });
 
     Route::group(['prefix' => 'inventories', 'middleware' => ['auth.user']], function () {
@@ -150,7 +142,17 @@ Route::group(['prefix' => 'v1'], function () {
         Route::put('/{user_invitation}', 'UserInvitationController@update');
         Route::delete('/{user_invitation}', 'UserInvitationController@delete');
     });
+    Route::group(['prefix' => 'settings', 'middleware' => ['auth.user']], function () {
+        Route::get('', 'SettingsController@read');
+        Route::post('', 'SettingsController@add');
+        Route::get('/{setting}', 'SettingsController@getByID');
+        Route::put('/{setting}', 'SettingsController@update');
+        Route::delete('/{setting}', 'SettingsController@delete');
+    });
 
+    Route::group(['prefix' => 'audit', 'middleware' => ['auth.user']], function () {
+        Route::get('', 'AuditController@read');
+    });
 });
 
 Route::model('inventory_type', 'App\InventoryType');
@@ -159,6 +161,7 @@ Route::model('customer', 'App\Customer');
 Route::model('order', 'App\CustomerOrder');
 Route::model('setting', 'App\Setting');
 Route::model('user_invitation', 'App\UserInvitation');
+Route::model('petty_cash', 'App\PettyCashController');
 Route::model('order', 'App\CustomerOrder');
 Route::model('user', 'App\User');
 Route::model('charge', 'App\Charges');

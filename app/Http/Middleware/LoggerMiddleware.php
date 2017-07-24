@@ -14,9 +14,9 @@ class LoggerMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
+    public function handle($request, Closure $next) {
         Utility::log($request);
+        //for($i = 0; $i < 200000000; $i++){}
         return $next($request);
     }
 }

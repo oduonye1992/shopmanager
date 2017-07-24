@@ -54,13 +54,17 @@ class CustomerOrderController extends Controller
             }
             $customer = Customer::findOrFail($data['customer_id']);
             $order = CustomerOrder::create($data);
-            $items = $request->items;
-            $this->addItems($items, $order->id, $request);
-            if (isset($request->charges)){
-                $charges = $request->charges;
-                $this->addCharges($charges, $order->id, $request);
+            $items = json_decode($request->items);
+            if(count($items)){
+                $this->addItems($items, $order->id, $request);
             }
-            Utility::audit($this->_entity.".add", 'Specified the service charge at');
+            if (isset($request->charges)){
+                $charges = json_decode($request->charges);
+                if (count($charges)){
+                    $this->addCharges($charges, $order->id, $request);
+                }
+            }
+            Utility::audit($this->_entity.".add", 'Specified the service charge at', $request->x_user);
             return CustomerOrder::where('id', $order->id)->with(['store', 'customer', 'employee', 'items', 'charge'])->get()[0];
         } catch (\Exception $e){
             return Utility::logError($e);
@@ -70,17 +74,18 @@ class CustomerOrderController extends Controller
         try {
             $user = $request->x_user;
             foreach ($items as $item){
+                $item = (array) $item;
                 $item['store_id'] = $user->store_id;
                 $item['order_id'] = $order_id;
-                $item['price'] = $item['cost'];
+                $item['price'] = $item['amount'];
                 CustomerOrderItem::create($item);
-                Utility::updateCategoryPrice($item['category_id'], $item['cost']);
+                Utility::updateCategoryPrice($item['category_id'], $item['amount']);
                 $inventories = Inventory::where(['type_id' => $item['category_id'],
                     'store_id' => $user->store_id,
                     'status' => 'available'])->oldest()->paginate($item['quantity']);
                 foreach ($inventories as $inventory) {
                     $inventory->selling_batch_id = $order_id;
-                    $inventory->selling_batch_cost = $item['cost'];
+                    $inventory->selling_batch_cost = $item['amount'];
                     $inventory->status = "not_available";
                     $inventory->save();
                 }
@@ -93,9 +98,10 @@ class CustomerOrderController extends Controller
         try {
             $user = $request->x_user;
             foreach ($items as $item){
+                $item = (array) $item;
                 $item['store_id'] = $user->store_id;
                 $item['order_id'] = $order_id;
-                $item['charge_id'] = $item['category_id'];
+                $item['charge_id'] = $item['id'];
                 OrderCharge::create($item);
             }
         } catch (\Exception $e){
