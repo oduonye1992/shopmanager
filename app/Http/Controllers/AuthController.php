@@ -125,4 +125,11 @@ class AuthController extends Controller
             "access_token" => $accessToken
         ];
     }
+    public function does_realm_exist($slug){
+        if (isset($slug)) return ["status" => true];
+        $companies = Company::where('slug', $slug)->get();
+        return [
+            "status" => count($companies) > 0
+        ];
+    }
 }

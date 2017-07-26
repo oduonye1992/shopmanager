@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
         Route::get('realms', 'AuthController@realms');
+        Route::get('does_realm_exist/{realm}', 'AuthController@does_realm_exist');
         Route::post('recover', 'AuthController@recover')->middleware('auth.user');
     });
 
@@ -142,6 +143,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::put('/{user_invitation}', 'UserInvitationController@update');
         Route::delete('/{user_invitation}', 'UserInvitationController@delete');
     });
+
     Route::group(['prefix' => 'settings', 'middleware' => ['auth.user']], function () {
         Route::get('', 'SettingsController@read');
         Route::post('', 'SettingsController@add');
