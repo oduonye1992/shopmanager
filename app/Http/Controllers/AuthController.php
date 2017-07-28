@@ -42,7 +42,7 @@ class AuthController extends Controller
                 'name' => 'required',
                 'slug' => 'required|unique:stores',
                 'username' => 'required',
-                'email' => 'required|email|unique:users',
+                'email' => 'required|unique:users',
                 'password' => 'required'
             ];
             $validator = Validator::make($request->all(), $validationRules);
