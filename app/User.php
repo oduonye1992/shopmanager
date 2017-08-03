@@ -29,4 +29,7 @@ class User extends Authenticatable
     public function Realm (){
         return $this->belongsTo('App\Company', 'store_id');
     }
+    public function scopeIsLikeName($query, $q){
+        return $query->where('name', 'LIKE', '%'.$q.'%');;
+    }
 }

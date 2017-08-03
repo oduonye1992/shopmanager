@@ -18,7 +18,12 @@ class Customer extends Model
         'is_default',
         'store_id'
     ];
+
     public function Store(){
         return $this->belongsTo('App\Company', 'store_id');
+    }
+
+    public function scopeIsLikeName($query, $q){
+        return $query->where('lastname', 'LIKE', '%'.$q.'%');;
     }
 }

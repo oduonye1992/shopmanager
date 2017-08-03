@@ -20,6 +20,23 @@ class VendorController extends Controller
         'is_default'
     ];
     private $_entity = 'vendor';
+    public function search($query, Request $request){
+        try {
+            $data = $request->all();
+            $whereColumn = [];
+            $whereColumn['store_id'] = $request->x_store_id;
+            foreach ($data as $key => $value){
+                if (in_array($key, $this->_tableColumns)){
+                    $whereColumn[$key] = $value;
+                }
+            }
+            return Vendor::where($whereColumn)
+                ->isLikeName($query)
+                ->with(['store'])->get();
+        } catch (\Exception $e){
+            return Utility::logError($e);
+        }
+    }
     public function read(Request $request){
         try {
             $data = $request->all();

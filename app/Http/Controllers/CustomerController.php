@@ -29,6 +29,18 @@ class CustomerController extends Controller
             return Utility::logError($e);
         }
     }
+    public function search($query, Request $request){
+        try {
+            $data = $request->all();
+            $whereColumn = [];
+            $whereColumn['store_id'] = $request->x_store_id;
+            return Customer::where($whereColumn)
+                ->isLikeName($query)
+                ->with(['store'])->get();
+        } catch (\Exception $e){
+            return Utility::logError($e);
+        }
+    }
     public function add(Request $request) {
         try {
             $rules = [

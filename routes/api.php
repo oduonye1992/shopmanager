@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'customers', 'middleware' => ['auth.user']], function () {
         Route::get('', 'CustomerController@read');
+        Route::get('search/{search_term}', 'CustomerController@search');
         Route::post('', 'CustomerController@add');
         Route::get('/{customer}', 'CustomerController@getByID');
         Route::put('/{customer}', 'CustomerController@update');
@@ -40,6 +41,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'vendors', 'middleware' => ['auth.user']], function () {
         Route::get('', 'VendorController@read');
+        Route::get('search/{search_term}', 'VendorController@search');
         Route::post('', 'VendorController@add');
         Route::get('/{vendor}', 'VendorController@getByID');
         Route::put('/{vendor}', 'VendorController@update');
@@ -56,6 +58,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'stock', 'middleware' => ['auth.user']], function () {
         Route::get('', 'StockController@read');
+        Route::get('search/{search}', 'StockController@search');
         Route::post('', 'StockController@add');
     });
 
@@ -69,6 +72,21 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'reports', 'middleware' => ['auth.user']], function () {
         Route::get('car', 'ReportController@car');
+        Route::get('fifo', 'ReportController@generateFifoReport');
+
+        Route::get('number_of_employees', 'DashboardController@numberOfEmployees');
+        Route::get('number_of_customers', 'DashboardController@numberOfCustomers');
+        Route::get('number_of_vendors', 'DashboardController@numberOfVendors');
+
+        Route::get('amount_this_month', 'DashboardController@amountThisMonth');
+        Route::get('amount_owed_this_month', 'DashboardController@amountOwedThisMonth');
+        Route::get('orders_this_month', 'DashboardController@numberOfOrdersThisMonth');
+        Route::get('petty_cash_balance', 'DashboardController@pettyCashBalance');
+
+        Route::get('depleted_categories', 'DashboardController@depletedCategories');
+        Route::get('customers_owing', 'DashboardController@customersOwingThisMonth');
+        Route::get('top_employee', 'DashboardController@topEmployee');
+        Route::get('top_customer', 'DashboardController@topCustomer');
     });
 
     Route::group(['prefix' => 'inventories', 'middleware' => ['auth.user']], function () {
@@ -81,6 +99,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'charges', 'middleware' => ['auth.user']], function () {
         Route::get('', 'ChargesController@read');
+        Route::get('search/{search_term}', 'ChargesController@search');
         Route::post('', 'ChargesController@add');
         Route::get('/{charge}', 'ChargesController@getByID');
         Route::put('/{charge}', 'ChargesController@update');

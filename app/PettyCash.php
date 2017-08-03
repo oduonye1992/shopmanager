@@ -23,4 +23,7 @@ class PettyCash extends Model
     public function User(){
         return $this->belongsTo('App\User', 'user_id');
     }
+    public function scopeIsLikeName($query, $q){
+        return $query->where('action', 'LIKE', '%'.$q.'%');;
+    }
 }

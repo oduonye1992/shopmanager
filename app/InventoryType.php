@@ -25,4 +25,7 @@ class InventoryType extends Model
     public function Inventory(){
         return $this->hasMany('App\Inventory', 'type_id');
     }
+    public function scopeIsLikeName($query, $q){
+        return $query->where('name', 'LIKE', '%'.$q.'%');;
+    }
 }
