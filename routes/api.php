@@ -165,10 +165,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'settings', 'middleware' => ['auth.user']], function () {
         Route::get('', 'SettingsController@read');
-        Route::post('', 'SettingsController@add');
-        Route::get('/{setting}', 'SettingsController@getByID');
-        Route::put('/{setting}', 'SettingsController@update');
-        Route::delete('/{setting}', 'SettingsController@delete');
+        Route::post('', 'SettingsController@update');
     });
 
     Route::group(['prefix' => 'audit', 'middleware' => ['auth.user']], function () {

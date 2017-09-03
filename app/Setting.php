@@ -17,9 +17,6 @@ class Setting extends Model
         'store_id'
     ];
     public function Store(){
-        return $this->belongsTo('App\Store', 'store_id');
-    }
-    public function Type(){
-        return $this->belongsTo('App\InventoryType', 'type_id');
+        return $this->belongsTo('App\Company', 'store_id');
     }
 }

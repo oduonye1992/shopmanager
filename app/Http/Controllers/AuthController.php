@@ -100,12 +100,14 @@ class AuthController extends Controller
                 return response('Incorrect email or password', Response::HTTP_UNAUTHORIZED);
             }
             $user = $matchingUsers[0];
+            $store = Company::findOrFail($request->id);
             $customClaims = ['store_id' => $request->store_id];
             $accessToken = JWTAuth::fromUser($user, $customClaims);
             return [
                 "status" => "ok",
                 "data" => [
                     "user" => $user,
+                    "store" => $store,
                     "access_token" => $accessToken
                 ]
             ];

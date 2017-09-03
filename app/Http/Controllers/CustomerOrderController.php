@@ -23,7 +23,7 @@ class CustomerOrderController extends Controller
         try {
             $data = $request->all();
             $whereColumn = [];
-            $whereColumn['store_id'] = $company->id;
+            $whereColumn['store_id'] = $request->x_store_id;
             foreach ($data as $key => $value){
                 if (in_array($key, $this->_tableColumns)){
                     $whereColumn[$key] = $value;
@@ -124,7 +124,28 @@ class CustomerOrderController extends Controller
         }
     }
     public function getByID(CustomerOrder $item){
-        return $item;
+        try {
+            $orders = CustomerOrder::where('id', $item->id)->with(['store', 'customer', 'employee', 'items', 'charge'])->get()[0];;
+            $newItems = [];
+            foreach ($orders->items as $item){
+                $_item = $item;
+                $category = InventoryType::findOrFail($item->category_id);
+                $_item['category'] = $category;
+                array_push($newItems, $_item);
+            }
+            $newCharges = [];
+            foreach ($orders->charge as $charge){
+                $_charge = $charge;
+                $__charge = OrderCharge::findOrFail($item->category_id);
+                $_charge['category'] = $__charge;
+                array_push($newCharges, $_charge);
+            }
+            $orders['items'] = $newItems;
+            $orders['charge'] = $newCharges;
+            return $orders;
+        } catch (\Exception $e){
+            return Utility::logError($e);
+        }
     }
     public function update(CustomerOrder $item,  Request $request){
         try {
