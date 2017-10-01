@@ -23,6 +23,7 @@ class CreateInventoryType extends Migration
             $table->string('measurement_name')->default('items');
             $table->integer('measurement_equivalent')->default(1);
             $table->integer('amount');
+            $table->string('sku')->unique();
             $table->integer('store_id')->unsigned();
             $table->foreign('store_id')->references('id')->on('stores');
         });

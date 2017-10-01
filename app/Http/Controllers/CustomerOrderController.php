@@ -47,7 +47,6 @@ class CustomerOrderController extends Controller
             $data = $request->all();
             $data['store_id'] = $request->x_store_id;
             $data['employee_id'] = Utility::getUser()->id;
-            $data['total'] = 0;
             $validator = Validator::make($data, $rules);
             if ($validator->fails()) {
                 return response($validator->errors()->all(), Response::HTTP_UNAUTHORIZED);

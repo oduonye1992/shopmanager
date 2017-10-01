@@ -15,6 +15,7 @@ class InventoryType extends Model
         'is_trackable',
         'threshold_count',
         'amount',
+        'sku',
         'measurement_name',
         'measurement_equivalent',
         'store_id'

@@ -58,6 +58,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'stock', 'middleware' => ['auth.user']], function () {
         Route::get('', 'StockController@read');
+        Route::get('sku', 'StockController@sku');
         Route::get('search/{search}', 'StockController@search');
         Route::post('', 'StockController@add');
     });

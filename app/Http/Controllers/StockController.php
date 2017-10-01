@@ -49,20 +49,24 @@ class StockController extends Controller
             return Utility::logError($e);
         }
     }
+    public function sku (Request $request){
+        $sku = $request->sku;
+        return InventoryType::where([
+            'sku' => $sku,
+            'store_id' => $request->x_store_id
+        ])->get()   ;
+    }
     public function add(Request $request) {
         try {
             $rules = [
                 'name' => 'required',
                 'quantity' => 'required|integer',
                 'price' => 'required|integer',
+                'sku' => 'unique:inventory_type',
                 'measurement_name' => 'required',
                 'measurement_equivalent' => 'required|integer',
                 'store_id' => 'required|integer|exists:stores,id'
             ];
-            /*
-             * 1. Create the inventory item
-             * 2. Add the batch
-             */
             $data = $request->all();
             $data['store_id'] = $request->x_store_id;
             Utility::log(json_encode($data));
