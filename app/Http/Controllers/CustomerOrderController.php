@@ -51,7 +51,7 @@ class CustomerOrderController extends Controller
             if ($validator->fails()) {
                 return response($validator->errors()->all(), Response::HTTP_UNAUTHORIZED);
             }
-            $customer = Customer::findOrFail($data['customer_id']);
+            //$customer = Customer::findOrFail($data['customer_id']);
             $order = CustomerOrder::create($data);
             $items = json_decode($request->items);
             if(count($items)){

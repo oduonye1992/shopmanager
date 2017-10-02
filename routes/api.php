@@ -73,7 +73,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'reports', 'middleware' => ['auth.user']], function () {
         Route::get('car', 'ReportController@car');
-        Route::get('fifo', 'ReportController@generateFifoReport');
+        Route::get('fifo/{inventory_type}', 'ReportController@generateFifoReport');
 
         Route::get('number_of_employees', 'DashboardController@numberOfEmployees');
         Route::get('number_of_customers', 'DashboardController@numberOfCustomers');

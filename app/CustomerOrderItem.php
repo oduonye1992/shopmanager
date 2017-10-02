@@ -15,6 +15,8 @@ class CustomerOrderItem extends Model
         'category_id',
         'quantity',
         'store_id',
+        'custom_date',
+        'note',
         'order_id',
     ];
     public function Store(){

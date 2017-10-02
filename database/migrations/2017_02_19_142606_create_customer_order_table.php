@@ -20,6 +20,8 @@ class CreateCustomerOrderTable extends Migration
             $table->integer('customer_id')->unsigned();
             $table->integer('employee_id')->unsigned();
             $table->integer('total')->unsigned();
+            $table->dateTime('custom_date')->nullable();
+            $table->longText('note')->nullable();
             $table->integer('store_id')->unsigned();
             $table->enum('status', ['paid', 'unpaid']);
             $table->enum('payment_method', ['POS', 'Cash', 'Cheque', 'On Account']);

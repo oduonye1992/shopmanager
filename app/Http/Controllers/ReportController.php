@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BatchPurchaseItems;
 use App\Company;
 use App\CustomerOrder;
+use App\CustomerOrderItem;
 use App\Inventory;
 use App\InventoryType;
 use App\Utility;
@@ -21,8 +22,9 @@ class ReportController extends Controller
         /*
          * Get the selling batches for that particular item
          */
-        $batches = BatchPurchaseItems::where(['category_id' => $type->id,
+        $batches = CustomerOrderItem::where(['category_id' => $type->id,
             'store_id' => $request->x_store_id])->oldest()->get();
+        Utility::log("Batch purchase = ".json_encode($batches));
         /**
          * For each batch, calculate the total number of items sold
          * Get the total numbers of items left

@@ -14,6 +14,8 @@ class CustomerOrder extends Model
         'customer_id',
         'employee_id',
         'total',
+        'note',
+        'custom_date',
         'store_id',
         'status',
         'payment_method'
